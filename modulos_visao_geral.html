@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluções CODI MES - Visão Geral</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Open Sans', sans-serif;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #20307E;
+        color: #F0F0F0;
+        overflow: hidden;
+        position: relative;
+      }
+      h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+      }
+      .title {
+        font-size: 36px;
+        line-height: 1.2;
+        margin-bottom: 24px;
+        color: #F0F0F0;
+        position: relative;
+      }
+      .title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: #00CC66;
+      }
+      .module-category {
+        transition: all 0.3s ease;
+      }
+      .module-category:hover {
+        transform: translateY(-5px);
+      }
+      .module-item {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .module-item:hover {
+        transform: scale(1.05);
+      }
+      .module-icon {
+        color: #00CC66;
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+      .circuit-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300cc66' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .tech-line {
+        position: absolute;
+        background: linear-gradient(90deg, rgba(0, 204, 102, 0.1) 0%, rgba(0, 204, 102, 0.3) 100%);
+        height: 1px;
+      }
+      .modules-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .node circle {
+        fill: #2E4A7F;
+        stroke: #00CC66;
+        stroke-width: 2px;
+      }
+      .node text {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        fill: #F0F0F0;
+      }
+      .link {
+        fill: none;
+        stroke: rgba(0, 204, 102, 0.5);
+        stroke-width: 1.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container flex flex-col p-16 relative">
+      <!-- Background elements -->
+      <div class="circuit-pattern"></div>
+      
+      <!-- Tech lines -->
+      <div class="tech-line" style="width: 200px; top: 15%; right: 10%; transform: rotate(-15deg);"></div>
+      <div class="tech-line" style="width: 150px; bottom: 20%; left: 5%; transform: rotate(25deg);"></div>
+      
+      <!-- Main content -->
+      <div class="z-10">
+        <h1 class="title">Soluções Principais - Visão Geral</h1>
+        
+        <div class="grid grid-cols-3 gap-8 mt-8">
+          <!-- Left column - Module Categories -->
+          <div>
+            <h3 class="text-2xl mb-6 text-white">Categorias</h3>
+            
+            <div class="space-y-6">
+              <!-- Category 1 -->
+              <div class="module-category bg-opacity-20 bg-white p-4 rounded-lg shadow-lg">
+                <div class="module-icon">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <h4 class="text-xl mb-2 font-semibold">Controle de Qualidade</h4>
+                <p class="text-sm">Garanta conformidade e excelência em todos os processos</p>
+              </div>
+              
+              <!-- Category 2 -->
+              <div class="module-category bg-opacity-20 bg-white p-4 rounded-lg shadow-lg">
+                <div class="module-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h4 class="text-xl mb-2 font-semibold">Produtividade</h4>
+                <p class="text-sm">Maximize a eficiência operacional do chão de fábrica</p>
+              </div>
+              
+              <!-- Category 3 -->
+              <div class="module-category bg-opacity-20 bg-white p-4 rounded-lg shadow-lg">
+                <div class="module-icon">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <h4 class="text-xl mb-2 font-semibold">Gestão e Inteligência</h4>
+                <p class="text-sm">Transforme dados em decisões estratégicas</p>
+              </div>
+              
+              <!-- Category 4 -->
+              <div class="module-category bg-opacity-20 bg-white p-4 rounded-lg shadow-lg">
+                <div class="module-icon">
+                  <i class="fas fa-tools"></i>
+                </div>
+                <h4 class="text-xl mb-2 font-semibold">Manutenção</h4>
+                <p class="text-sm">Otimize a disponibilidade e vida útil dos equipamentos</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Middle column - Module Integration -->
+          <div class="col-span-2">
+            <h3 class="text-2xl mb-6 text-white">Integração entre Módulos</h3>
+            
+            <div class="modules-container" style="height: 450px;">
+              <div id="modules-diagram" style="height: 100%;"></div>
+            </div>
+            
+            <p class="text-sm text-gray-300 italic mt-4 text-center">
+              Todos as Soluções do CODI MES são perfeitamente integrados, compartilhando dados 
+              e funcionalidades para uma experiência completa e coesa.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bottom logo placeholder -->
+      <div class="absolute bottom-8 right-8">
+        <div class="bg-white bg-opacity-10 px-4 py-2 rounded-lg">
+          <p class="text-lg font-bold">CODI</p>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Modules integration diagram using D3.js
+      const data = {
+        nodes: [
+          { id: "core", name: "CODI MES", group: 0 },
+          { id: "cep", name: "CEP", group: 1 },
+          { id: "checklist", name: "Checklist", group: 1 },
+          { id: "coletor", name: "Coletor+", group: 2 },
+          { id: "coletorInt", name: "Coletor Interativo", group: 2 },
+          { id: "ved", name: "VED", group: 2 },
+          { id: "monitor", name: "Monitor Interactive", group: 2 },
+          { id: "dashboard", name: "Dashboards", group: 3 },
+          { id: "ia", name: "Inteligência Artificial", group: 3 },
+          { id: "sequenciamento", name: "Sequenciamento", group: 3 },
+          { id: "manutencao", name: "Manutenção", group: 4 },
+          { id: "ferramentas", name: "Gestão de Ferramentas", group: 4 },
+          { id: "crono", name: "Cronoanálise", group: 4 },
+          { id: "dnc", name: "DNC", group: 4 },
+          { id: "integrador", name: "Integrador", group: 0 }
+        ],
+        links: [
+          { source: "core", target: "cep", value: 1 },
+          { source: "core", target: "checklist", value: 1 },
+          { source: "core", target: "coletor", value: 1 },
+          { source: "core", target: "coletorInt", value: 1 },
+          { source: "core", target: "ved", value: 1 },
+          { source: "core", target: "monitor", value: 1 },
+          { source: "core", target: "dashboard", value: 1 },
+          { source: "core", target: "ia", value: 1 },
+          { source: "core", target: "sequenciamento", value: 1 },
+          { source: "core", target: "manutencao", value: 1 },
+          { source: "core", target: "ferramentas", value: 1 },
+          { source: "core", target: "crono", value: 1 },
+          { source: "core", target: "dnc", value: 1 },
+          { source: "core", target: "integrador", value: 1 },
+          { source: "cep", target: "dashboard", value: 1 },
+          { source: "checklist", target: "dashboard", value: 1 },
+          { source: "coletor", target: "dashboard", value: 1 },
+          { source: "coletorInt", target: "dashboard", value: 1 },
+          { source: "ved", target: "dashboard", value: 1 },
+          { source: "monitor", target: "dashboard", value: 1 },
+          { source: "manutencao", target: "dashboard", value: 1 },
+          { source: "ferramentas", target: "dashboard", value: 1 },
+          { source: "crono", target: "dashboard", value: 1 },
+          { source: "dnc", target: "dashboard", value: 1 },
+          { source: "ia", target: "dashboard", value: 1 },
+          { source: "ia", target: "sequenciamento", value: 1 },
+          { source: "coletor", target: "ia", value: 1 },
+          { source: "coletorInt", target: "ia", value: 1 },
+          { source: "manutencao", target: "ferramentas", value: 1 },
+          { source: "integrador", target: "dashboard", value: 1 }
+        ]
+      };
+
+      const width = document.getElementById('modules-diagram').clientWidth;
+      const height = document.getElementById('modules-diagram').clientHeight;
+      
+      const svg = d3.select("#modules-diagram")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+        
+      // Define color scale for node groups
+      const color = d3.scaleOrdinal()
+        .domain([0, 1, 2, 3, 4])
+        .range(["#00CC66", "#2E4A7F", "#3E5A8F", "#4E6A9F", "#5E7AAF"]);
+      
+      // Create force simulation
+      const simulation = d3.forceSimulation(data.nodes)
+        .force("link", d3.forceLink(data.links).id(d => d.id).distance(100))
+        .force("charge", d3.forceManyBody().strength(-300))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collision", d3.forceCollide().radius(50));
+      
+      // Create links
+      const link = svg.append("g")
+        .selectAll("line")
+        .data(data.links)
+        .enter()
+        .append("line")
+        .attr("class", "link");
+      
+      // Create node groups
+      const node = svg.append("g")
+        .selectAll(".node")
+        .data(data.nodes)
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+      
+      // Add circles to nodes
+      node.append("circle")
+        .attr("r", d => d.id === "core" ? 25 : 15)
+        .style("fill", d => color(d.group))
+        .style("stroke", "#00CC66")
+        .style("stroke-width", d => d.id === "core" ? 3 : 2);
+      
+      // Add text labels to nodes
+      node.append("text")
+        .attr("dy", d => d.id === "core" ? 35 : 25)
+        .attr("text-anchor", "middle")
+        .text(d => d.name)
+        .style("font-size", d => d.id === "core" ? "14px" : "12px");
+      
+      // Update positions on each tick
+      simulation.on("tick", () => {
+        link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+        
+        node
+          .attr("transform", d => `translate(${d.x},${d.y})`);
+      });
+      
+      // Drag functions
+      function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      }
+      
+      function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+      }
+      
+      function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }
+    </script>
+  </body>
+</html>
+

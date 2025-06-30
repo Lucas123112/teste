@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluções de Conectividade e Processos Específicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Open Sans', sans-serif;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #20307E;
+        color: #F0F0F0;
+        overflow: hidden;
+        position: relative;
+      }
+      h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+      }
+      .title {
+        font-size: 36px;
+        line-height: 1.2;
+        margin-bottom: 24px;
+        color: #F0F0F0;
+        position: relative;
+      }
+      .title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: #00CC66;
+      }
+      .module-feature {
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+      }
+      .module-feature:hover {
+        border-left: 3px solid #00CC66;
+        transform: translateX(5px);
+      }
+      .feature-icon {
+        color: #00CC66;
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      /* Removed .circuit-pattern and .tech-line styles as images are removed */
+      .module-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .chart-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .module-tab {
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .module-tab.active {
+        background: rgba(0, 204, 102, 0.2);
+        border-left: 3px solid #00CC66;
+      }
+      .module-tab:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .module-content {
+        display: none;
+      }
+      .module-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container flex flex-col p-16 relative">
+      <div class="z-10">
+        <h1 class="title">Soluções de Conectividade e Processos Específicos</h1>
+        
+        <div class="grid grid-cols-3 gap-8 mt-8">
+          <div>
+            <div class="flex flex-col space-y-2">
+              <div id="tab-dnc" class="module-tab active p-4 rounded-lg flex items-center" onclick="switchTab('dnc')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-network-wired text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">DNC</h4>
+                  <p class="text-sm text-gray-300">Transferência de Programas CNC</p>
+                </div>
+              </div>
+              
+              <div id="tab-integrador" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('integrador')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-link text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Integrador</h4>
+                  <p class="text-sm text-gray-300">Integração de Sistemas</p>
+                </div>
+              </div>
+              
+              <div id="tab-matrix" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('matrix')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-th text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Matrix</h4>
+                  <p class="text-sm text-gray-300">Rastreabilidade de Componentes</p>
+                </div>
+              </div>
+              
+              <div id="tab-serra" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('serra')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-cut text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Serra</h4>
+                  <p class="text-sm text-gray-300">Otimização de Corte</p>
+                </div>
+              </div>
+              
+              <div id="tab-solda" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('solda')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-fire text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Solda</h4>
+                  <p class="text-sm text-gray-300">Eficiência de Soldagem</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="chart-container mt-8">
+              <h4 class="text-xl mb-4 text-center">Impacto na Conectividade</h4>
+              <div style="height: 250px;">
+                <canvas id="connectivityChart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-span-2">
+            <div class="module-container h-full">
+              <div id="content-dnc" class="module-content active">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-network-wired text-green-400 mr-3"></i>
+                  DNC
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Transferência de programas CNC com Segurança, Precisão e Velocidade!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-exchange-alt"></i></span>
+                      Transferência Ágil e Segura
+                    </h4>
+                    <p>Transferência Ágil e Segura via Serial ou Ethernet!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-times-circle"></i></span>
+                      Elimine Erros Manuais
+                    </h4>
+                    <p>Elimine erros manuais e agilize trocas de programa com total rastreabilidade e controle.</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-server"></i></span>
+                      Controle Centralizado
+                    </h4>
+                    <p>Controle Centralizado, Versão Certa Sempre na Máquina!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-comments"></i></span>
+                      Comunicação Automatizada
+                    </h4>
+                    <p>Comunicação Automatizada!</p>
+                  </div>
+                </div>
+                </div>
+              
+              <div id="content-integrador" class="module-content">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-link text-green-400 mr-3"></i>
+                  Integrador
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Integração Eficiente, Confiável e Sem Barreiras!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-bolt"></i></span>
+                      Troca de Informações Rápida e Segura
+                    </h4>
+                    <p>Garanta comunicação instantânea e confiável entre sistemas — para decisões ágeis e precisas.</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-check-circle"></i></span>
+                      Compatibilidade Total
+                    </h4>
+                    <p>Compatibilidade Total com os Principais Padrões de Integração do Mercado!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-clock"></i></span>
+                      Ganhe Tempo e Potencialize
+                    </h4>
+                    <p>Automatize processos conectados, elimine retrabalhos e maximize a eficiência em toda a cadeia produtiva.</p>
+                  </div>
+                </div>
+                </div>
+              
+              <div id="content-matrix" class="module-content">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-th text-green-400 mr-3"></i>
+                  Matrix
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Domine cada etapa da fabricação com rastreabilidade e eficiência máxima!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-cogs"></i></span>
+                      Componentes Sob Controle
+                    </h4>
+                    <p>Cada Item da Matriz na Palma da Mão!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-hourglass-half"></i></span>
+                      Tempo Estimado x Tempo Realizado
+                    </h4>
+                    <p>Dados que Revelam a Verdade!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-boxes"></i></span>
+                      Gerencie Individualmente
+                    </h4>
+                    <p>Gerencie individualmente os itens que compõem ferramentas, moldes ou matrizes — ideal para produções técnicas e específicas.</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-chart-line"></i></span>
+                      Menos Desperdício. Mais Eficiência.
+                    </h4>
+                    <p>Menos Desperdício. Mais Eficiência. Entregas Garantidas!</p>
+                  </div>
+                </div>
+                </div>
+              
+              <div id="content-serra" class="module-content">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-cut text-green-400 mr-3"></i>
+                  Serra
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Corte com Precisão, Produtividade e Máxima Durabilidade!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-crosshairs"></i></span>
+                      Gerencie o Uso de Serras
+                    </h4>
+                    <p>Gerencie o uso de serras com precisão — parâmetros ajustados, performance elevada.</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-history"></i></span>
+                      Acompanhe o Histórico
+                    </h4>
+                    <p>Acompanhe o histórico de cada serra, com dados de uso e volume cortado — transparência total.</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-minus-circle"></i></span>
+                      Menos Quebras, Mais Produção
+                    </h4>
+                    <p>Menos Quebras, Mais Produção!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-chart-line"></i></span>
+                      Vida Útil Estendida
+                    </h4>
+                    <p>Vida Útil Estendida, Resultados Consistentes!</p>
+                  </div>
+                </div>
+                </div>
+              
+              <div id="content-solda" class="module-content">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-fire text-green-400 mr-3"></i>
+                  Solda
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Eficiência de Soldagem em Tempo Real: Precisão que Impulsiona a Produção!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-clock"></i></span>
+                      Arco-Aberto no Radar
+                    </h4>
+                    <p>Monitoramento Cirúrgico do Ciclo de Produção!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-balance-scale"></i></span>
+                      Compare, Ajuste e Otimize
+                    </h4>
+                    <p>Compare, Ajuste e Otimize com Dados Reais!</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-chart-pie"></i></span>
+                      Dados Precisos, Inputs Confiáveis
+                    </h4>
+                    <p>Dados precisos, inputs confiáveis e processos sob gestão — tudo na palma da mão do operador.</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-rocket"></i></span>
+                      Tecnologia Que Transforma
+                    </h4>
+                    <p>Tecnologia Que Transforma Dados em Decisões!</p>
+                  </div>
+                </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="absolute bottom-8 right-8">
+        <div class="bg-white bg-opacity-10 px-4 py-2 rounded-lg">
+          <p class="text-lg font-bold">CODI</p>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Tab switching functionality
+      function switchTab(moduleId) {
+        // Hide all content
+        document.querySelectorAll('.module-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Deactivate all tabs
+        document.querySelectorAll('.module-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        
+        // Activate selected content and tab
+        document.getElementById('content-' + moduleId).classList.add('active');
+        document.getElementById('tab-' + moduleId).classList.add('active');
+      }
+      
+      // Connectivity chart
+      const ctx = document.getElementById('connectivityChart').getContext('2d');
+      const connectivityChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Integração', 'Automação', 'Rastreabilidade', 'Otimização'],
+          datasets: [{
+            data: [25, 20, 30, 25],
+            backgroundColor: [
+              'rgba(0, 204, 102, 0.8)',
+              'rgba(0, 204, 102, 0.6)',
+              'rgba(0, 204, 102, 0.4)',
+              'rgba(0, 204, 102, 0.2)'
+            ],
+            borderColor: [
+              'rgba(0, 204, 102, 1)',
+              'rgba(0, 204, 102, 1)',
+              'rgba(0, 204, 102, 1)',
+              'rgba(0, 204, 102, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#F0F0F0',
+                font: {
+                  size: 10
+                }
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

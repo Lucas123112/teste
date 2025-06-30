@@ -1,0 +1,422 @@
+z<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluções de Gestão e Inteligência</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Open Sans', sans-serif;
+      }
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #20307E;
+        color: #F0F0F0;
+        overflow: hidden;
+        position: relative;
+      }
+      h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+      }
+      .title {
+        font-size: 36px;
+        line-height: 1.2;
+        margin-bottom: 24px;
+        color: #F0F0F0;
+        position: relative;
+      }
+      .title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: #00CC66;
+      }
+      .module-feature {
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+      }
+      .module-feature:hover {
+        border-left: 3px solid #00CC66;
+        transform: translateX(5px);
+      }
+      .feature-icon {
+        color: #00CC66;
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      .circuit-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300cc66' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .tech-line {
+        position: absolute;
+        background: linear-gradient(90deg, rgba(0, 204, 102, 0.1) 0%, rgba(0, 204, 102, 0.3) 100%);
+        height: 1px;
+      }
+      .module-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .chart-container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .module-tab {
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .module-tab.active {
+        background: rgba(0, 204, 102, 0.2);
+        border-left: 3px solid #00CC66;
+      }
+      .module-tab:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .module-content {
+        display: none;
+      }
+      .module-content.active {
+        display: block;
+      }
+
+      /* Styles for expandable image */
+      .expandable-image {
+        cursor: pointer;
+        transition: transform 0.3s ease, max-height 0.3s ease;
+      }
+      .expanded-image-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .expanded-image-overlay img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container flex flex-col p-16 relative">
+      <div class="circuit-pattern"></div>
+      
+      <div class="tech-line" style="width: 200px; top: 15%; right: 10%; transform: rotate(-15deg);"></div>
+      <div class="tech-line" style="width: 150px; bottom: 20%; left: 5%; transform: rotate(25deg);"></div>
+      
+      <div class="z-10">
+        <h1 class="title">Soluções de Gestão e Inteligência</h1>
+        
+        <div class="grid grid-cols-3 gap-8 mt-8">
+          <div>
+            <div class="flex flex-col space-y-2">
+              <div id="tab-dashboards" class="module-tab active p-4 rounded-lg flex items-center" onclick="switchTab('dashboards')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-chart-bar text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Dashboards</h4>
+                  <p class="text-sm text-gray-300">Visualização de Dados</p>
+                </div>
+              </div>
+              
+              <div id="tab-ia" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('ia')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-brain text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Inteligência Artificial</h4>
+                  <p class="text-sm text-gray-300">Análise Preditiva</p>
+                </div>
+              </div>
+              
+              <div id="tab-sequenciamento" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('sequenciamento')">
+                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                  <i class="fas fa-tasks text-green-400"></i>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold">Sequenciamento</h4>
+                  <p class="text-sm text-gray-300">Otimização de Produção</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="chart-container mt-8">
+              <h4 class="text-xl mb-4 text-center">Impacto na Tomada de Decisão</h4>
+              <div style="height: 250px;">
+                <canvas id="decisionChart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-span-2">
+            <div class="module-container h-full">
+              <div id="content-dashboards" class="module-content active">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-chart-bar text-green-400 mr-3"></i>
+                  Dashboards
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Visualize, Analise, Decida: Seus Dados Transformados em Ação!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-tachometer-alt"></i></span>
+                      Visão 360°
+                    </h4>
+                    <p>Visão completa e integrada de todos os indicadores críticos do seu negócio em um só lugar</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-filter"></i></span>
+                      Filtros Inteligentes
+                    </h4>
+                    <p>Navegue pelos dados com filtros dinâmicos e personalizados para análises específicas</p>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-bell"></i></span>
+                      Alertas Personalizados
+                    </h4>
+                    <p>Configure alertas para ser notificado quando indicadores atingirem limites críticos</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-share-alt"></i></span>
+                      Compartilhamento Fácil
+                    </h4>
+                    <p>Compartilhe insights e relatórios com sua equipe para alinhar decisões estratégicas</p>
+                  </div>
+                </div>
+                
+                <div class="mt-6 flex justify-center">
+                  <img id="dashboardImage" src="Dashboard.JPG" alt="Dashboards" class="w-full h-auto rounded-lg shadow-lg expandable-image" style="max-height: 150px; object-fit: contain;">
+                </div>
+              </div>
+              
+              <div id="content-ia" class="module-content">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-brain text-green-400 mr-3"></i>
+                  Inteligência Artificial
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Antecipe o Futuro: Decisões Baseadas em Dados, Potencializadas por IA!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-chart-line"></i></span>
+                      Análise Preditiva
+                    </h4>
+                    <p>Algoritmos avançados que preveem tendências e comportamentos futuros com base em dados históricos</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-search"></i></span>
+                      Detecção de Anomalias
+                    </h4>
+                    <p>Identificação automática de padrões incomuns que podem indicar problemas ou oportunidades</p>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-cogs"></i></span>
+                      Otimização de Processos
+                    </h4>
+                    <p>Recomendações inteligentes para ajustar parâmetros e maximizar eficiência operacional</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-robot"></i></span>
+                      Aprendizado Contínuo
+                    </h4>
+                    <p>Sistema que evolui constantemente, aprendendo com novos dados e melhorando suas previsões</p>
+                  </div>
+                </div>
+                <div class="mt-6 flex justify-center">
+                  <img id="iaImage" src="IA.JPG" alt="Inteligência Artificial" class="w-full h-auto rounded-lg shadow-lg expandable-image" style="max-height: 150px; object-fit: contain;">
+                </div>
+              </div>
+              
+              <div id="content-sequenciamento" class="module-content">
+                <h3 class="text-2xl mb-6 text-white flex items-center">
+                  <i class="fas fa-tasks text-green-400 mr-3"></i>
+                  Sequenciamento de Produção
+                </h3>
+                
+                <p class="mb-6 text-lg">
+                  "Fluxo Perfeito: Produza Mais, com Menos Recursos e no Tempo Certo!"
+                </p>
+                
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-sort-amount-down"></i></span>
+                      Priorização Inteligente
+                    </h4>
+                    <p>Algoritmos que organizam a produção considerando prazos, recursos disponíveis e prioridades do negócio</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-clock"></i></span>
+                      Redução de Setup
+                    </h4>
+                    <p>Sequenciamento otimizado que minimiza trocas e ajustes entre lotes, maximizando o tempo produtivo</p>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-balance-scale"></i></span>
+                      Balanceamento de Carga
+                    </h4>
+                    <p>Distribuição equilibrada de trabalho entre recursos, evitando gargalos e ociosidade</p>
+                  </div>
+                  
+                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                      <span class="text-green-400 mr-2"><i class="fas fa-sync-alt"></i></span>
+                      Replanejamento Dinâmico
+                    </h4>
+                    <p>Adaptação rápida a imprevistos, com recálculo automático da sequência ideal quando necessário</p>
+                  </div>
+                </div>
+                <div class="mt-6 flex justify-center">
+                  <img id="sequenciamentoImage" src="Sequenciamento.JPG" alt="Sequenciamento de Produção" class="w-full h-auto rounded-lg shadow-lg expandable-image" style="max-height: 150px; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="absolute bottom-8 right-8">
+        <div class="bg-white bg-opacity-10 px-4 py-2 rounded-lg">
+          <p class="text-lg font-bold">CODI</p>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Tab switching functionality
+      function switchTab(moduleId) {
+        // Hide all content
+        document.querySelectorAll('.module-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Deactivate all tabs
+        document.querySelectorAll('.module-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        
+        // Activate selected content and tab
+        document.getElementById('content-' + moduleId).classList.add('active');
+        document.getElementById('tab-' + moduleId).classList.add('active');
+      }
+      
+      // Decision impact chart
+      const ctxDecision = document.getElementById('decisionChart').getContext('2d');
+      const decisionChart = new Chart(ctxDecision, {
+        type: 'doughnut',
+        data: {
+          labels: ['Redução de Tempo', 'Precisão', 'Economia', 'Produtividade'],
+          datasets: [{
+            data: [35, 25, 20, 20],
+            backgroundColor: [
+              'rgba(0, 204, 102, 0.8)',
+              'rgba(0, 204, 102, 0.6)',
+              'rgba(0, 204, 102, 0.4)',
+              'rgba(0, 204, 102, 0.2)'
+            ],
+            borderColor: [
+              'rgba(0, 204, 102, 1)',
+              'rgba(0, 204, 102, 1)',
+              'rgba(0, 204, 102, 1)',
+              'rgba(0, 204, 102, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#F0F0F0',
+                font: {
+                  size: 10
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Expandable Image Functionality
+      function setupExpandableImage(imageId) {
+        const image = document.getElementById(imageId);
+        image.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.classList.add('expanded-image-overlay');
+
+          const expandedImg = document.createElement('img');
+          expandedImg.src = image.src;
+          expandedImg.alt = image.alt;
+
+          overlay.appendChild(expandedImg);
+          document.body.appendChild(overlay);
+
+          overlay.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+          });
+        });
+      }
+
+      setupExpandableImage('dashboardImage');
+      setupExpandableImage('iaImage');
+      setupExpandableImage('sequenciamentoImage');
+    </script>
+  </body>
+</html>

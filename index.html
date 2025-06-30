@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação CODI MES</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        .nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 101;
+        }
+        .progress {
+            height: 100%;
+            background: #00CC66;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Slides Container -->
+    <div id="slides-container">
+        <!-- Os slides serão carregados aqui via JavaScript -->
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-button" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-button" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        // Lista de slides na ordem da apresentação
+        const slides = [
+            'slide_abertura.html',
+            'sobre_codi.html',
+            'desafios_industria.html',
+            'visao_geral_sistema.html',
+            'modulos_visao_geral.html',
+            'modulos_qualidade.html',
+            'modulos_produtividade.html',
+            'modulos_otimizacao_manutencao.html',
+            'modulos_gestao.html',
+            'modulos_conectividade_especificos.html',
+            'casos_sucesso.html',
+            'proximos_passos.html'
+        ];
+
+        let currentSlide = 0;
+        const slidesContainer = document.getElementById('slides-container');
+        const progressBar = document.getElementById('progress');
+
+        // Carrega todos os slides
+        function loadSlides() {
+            slides.forEach((slide, index) => {
+                const slideFrame = document.createElement('div');
+                slideFrame.className = 'slide';
+                slideFrame.id = `slide-${index}`;
+                slideFrame.innerHTML = `
+                    <iframe src="${slide}" frameborder="0" style="width:100%;height:100%;"></iframe>
+                `;
+                slidesContainer.appendChild(slideFrame);
+            });
+
+            // Ativa o primeiro slide
+            showSlide(0);
+        }
+
+        // Mostra um slide específico
+        function showSlide(index) {
+            // Verifica os limites
+            if (index < 0) index = 0;
+            if (index >= slides.length) index = slides.length - 1;
+
+            // Esconde todos os slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            // Mostra o slide atual
+            document.getElementById(`slide-${index}`).classList.add('active');
+            currentSlide = index;
+
+            // Atualiza a barra de progresso
+            updateProgressBar();
+        }
+
+        // Atualiza a barra de progresso
+        function updateProgressBar() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                showSlide(currentSlide - 1);
+            }
+        });
+
+        // Botões de navegação
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        // Inicia a apresentação
+        window.onload = loadSlides;
+    </script>
+</body>
+</html>
