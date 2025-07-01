@@ -65,60 +65,27 @@
         opacity: 0.1;
         background-image: url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%2300cc66\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       }
-      .main-image {
-        max-width: 80%; /* Adjust as needed */
-        max-height: 400px; /* Adjust as needed */
-        object-fit: contain;
-        margin-top: 40px; /* Space between subtitle and image */
-        margin-bottom: 40px; /* Space between image and text below */
-        cursor: pointer; /* Indicate it's clickable */
-      }
-
-      /* Styles for the modal */
-      .modal-overlay {
-        position: fixed;
+      /* New CSS for background image */
+      .background-image-overlay {
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex; /* Ensures flexbox properties work */
-        justify-content: center; /* Centers horizontally */
-        align-items: center; /* Centers vertically */
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-      }
-
-      .modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .modal-content {
-        max-width: 90%;
-        max-height: 90%;
-        object-fit: contain;
-      }
-
-      .modal-close {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        color: #fff;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 1001;
+        background-image: url("Capa inicial.PNG");
+        background-size: cover; /* or 'contain' depending on desired effect */
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.15; /* Adjust for desired transparency */
+        pointer-events: none; /* Allows clicks to pass through to elements below */
+        z-index: 0; /* Ensure it's behind the content */
       }
     </style>
   </head>
   <body>
     <div class="slide-container flex flex-col items-center justify-center p-16 relative">
       <div class="circuit-pattern"></div>
-      
-      <div class="tech-circle" style="width: 300px; height: 300px; top: 10%; left: 5%; opacity: 0.2;"></div>
+      <div class="background-image-overlay"></div> <div class="tech-circle" style="width: 300px; height: 300px; top: 10%; left: 5%; opacity: 0.2;"></div>
       <div class="tech-circle" style="width: 200px; height: 200px; bottom: 15%; right: 10%; opacity: 0.15;"></div>
       <div class="tech-line" style="width: 400px; top: 30%; left: 0; transform: rotate(25deg);"></div>
       <div class="tech-line" style="width: 300px; bottom: 40%; right: 0; transform: rotate(-15deg);"></div>
@@ -129,15 +96,11 @@
       <div class="tech-dot" style="top: 45%; right: 25%;"></div>
       <div class="tech-dot" style="top: 70%; right: 35%;"></div>
       
-      <div class="z-10 text-center flex flex-col items-center">
+      <div class="z-10 text-center flex flex-col items-center justify-center h-full">
         <h1 class="title">CODI MES</h1>
         <h2 class="subtitle">Transformando a Indústria 4.0</h2>
         
-        <div id="imageContainer" class="cursor-pointer">
-          <img src="Coletor Interativo.JPG" alt="Imagem Central" class="main-image">
-        </div>
-        
-        <p class="text-xl mt-8">Soluções inteligentes para manufatura avançada</p>
+        <p class="text-xl mt-8 mb-20">Soluções inteligentes para manufatura avançada</p>
       </div>
       
       <div class="absolute bottom-8 flex justify-center w-full">
@@ -147,50 +110,5 @@
       </div>
     </div>
 
-    <div id="imageModal" class="modal-overlay">
-      <span class="modal-close">&times;</span>
-      <img src="" alt="Expanded Image" class="modal-content" id="expandedImage">
-    </div>
-
-    <script>
-      const imageContainer = document.getElementById('imageContainer');
-      const mainImage = imageContainer.querySelector('.main-image');
-      const imageModal = document.getElementById('imageModal');
-      const expandedImage = document.getElementById('expandedImage');
-      const modalClose = document.querySelector('.modal-close');
-
-      // Function to open the modal
-      function openModal() {
-        expandedImage.src = mainImage.src; // Set the source of the expanded image
-        imageModal.classList.add('active'); // Add 'active' class to show the modal
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-      }
-
-      // Function to close the modal
-      function closeModal() {
-        imageModal.classList.remove('active'); // Remove 'active' class to hide the modal
-        document.body.style.overflow = ''; // Re-enable scrolling
-      }
-
-      // Event listener for clicking the main image
-      mainImage.addEventListener('click', openModal);
-
-      // Event listener for clicking the close button
-      modalClose.addEventListener('click', closeModal);
-
-      // Event listener for clicking outside the image (on the overlay) to close the modal
-      imageModal.addEventListener('click', (event) => {
-        if (event.target === imageModal) {
-          closeModal();
-        }
-      });
-
-      // Event listener for 'Escape' key to close the modal
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && imageModal.classList.contains('active')) {
-          closeModal();
-        }
-      });
-    </script>
-  </body>
+    </body>
 </html>
