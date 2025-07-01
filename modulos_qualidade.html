@@ -20,7 +20,8 @@
             min-height: 720px;
             background: #20307E;
             color: #F0F0F0;
-            overflow: hidden;
+            overflow-y: auto; /* Added for vertical scroll */
+            overflow-x: hidden; /* Prevent horizontal scroll */
             position: relative;
         }
         h1, h2, h3 {
@@ -234,8 +235,10 @@
                                 </div>
                             </div>
                             <div class="mt-6 flex justify-center relative">
-                                <img src="CEP.JPG" alt="CEP" class="w-full h-auto rounded-lg shadow-lg zoomable-image" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
-                                <p class="image-message">Clique para expandir a imagem</p>
+                                <div class="zoomable-image">
+                                    <img src="CEP.JPG" alt="CEP" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
+                                    <p class="image-message">Clique para expandir a imagem</p>
+                                </div>
                             </div>
                         </div>
                         
@@ -283,8 +286,10 @@
                                 </div>
                             </div>
                             <div class="mt-6 flex justify-center relative">
-                                <img src="Checlist.JPG" alt="Checklist" class="w-full h-auto rounded-lg shadow-lg zoomable-image" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
-                                <p class="image-message">Clique para expandir a imagem</p>
+                                <div class="zoomable-image">
+                                    <img src="Checlist.JPG" alt="Checklist" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
+                                    <p class="image-message">Clique para expandir a imagem</p>
+                                </div>
                             </div>
                         </div>
                     </div>
