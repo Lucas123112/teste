@@ -1,537 +1,410 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soluções de Produtividade e Coleta de Dados</title>
+    <title>Soluções de Qualidade e Controle</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Open Sans', sans-serif;
-      }
-      .slide-container {
-        width: 1280px;
-        min-height: 720px;
-        background: #20307E;
-        color: #F0F0F0;
-        overflow: hidden;
-        position: relative;
-      }
-      h1, h2, h3 {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 700;
-      }
-      .title {
-        font-size: 36px;
-        line-height: 1.2;
-        margin-bottom: 24px;
-        color: #F0F0F0;
-        position: relative;
-      }
-      .title::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        width: 80px;
-        height: 4px;
-        background: #00CC66;
-      }
-      .module-feature {
-        transition: all 0.3s ease;
-        border-left: 3px solid transparent;
-      }
-      .module-feature:hover {
-        border-left: 3px solid #00CC66;
-        transform: translateX(5px);
-      }
-      .feature-icon {
-        color: #00CC66;
-        font-size: 24px;
-        margin-bottom: 12px;
-      }
-      .circuit-pattern {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0.05;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300cc66' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      }
-      .tech-line {
-        position: absolute;
-        background: linear-gradient(90deg, rgba(0, 204, 102, 0.1) 0%, rgba(0, 204, 102, 0.3) 100%);
-        height: 1px;
-      }
-      .module-container {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        padding: 16px;
-      }
-      .chart-container {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        padding: 16px;
-      }
-      .module-tab {
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .module-tab.active {
-        background: rgba(0, 204, 102, 0.2);
-        border-left: 3px solid #00CC66;
-      }
-      .module-tab:hover:not(.active) {
-        background: rgba(255, 255, 255, 0.1);
-      }
-      .module-content {
-        display: none;
-      }
-      .module-content.active {
-        display: block;
-      }
-      /* Estilos para a modal de imagem */
-      .image-modal-overlay {
-        display: none; /* Escondido por padrão */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        backdrop-filter: blur(5px);
-      }
-      .image-modal-content {
-        position: relative;
-        max-width: 90%;
-        max-height: 90%;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .image-modal-content img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
-      }
-      .image-modal-close {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        color: #fff;
-        font-size: 30px;
-        cursor: pointer;
-        z-index: 1001;
-      }
-      .image-wrapper {
-        position: relative;
-        cursor: pointer;
-      }
-      .image-trigger {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        border-radius: 8px; /* Mantém o border-radius da imagem */
-      }
-      .image-wrapper:hover .image-trigger {
-        opacity: 1;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            /* Removido overflow: hidden; do body */
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 100vh; /* Alterado para 100vh para garantir que preencha a viewport e permita rolagem */
+            background: #20307E;
+            color: #F0F0F0;
+            overflow-y: auto; /* Adicionado para rolagem vertical */
+            overflow-x: hidden; /* Previne rolagem horizontal */
+            position: relative;
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        .title {
+            font-size: 36px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: #F0F0F0;
+            position: relative;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: #00CC66;
+        }
+        .module-feature {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .module-feature:hover {
+            border-left: 3px solid #00CC66;
+            transform: translateX(5px);
+        }
+        .feature-icon {
+            color: #00CC66;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .circuit-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300cc66' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .tech-line {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(0, 204, 102, 0.1) 0%, rgba(0, 204, 102, 0.3) 100%);
+            height: 1px;
+        }
+        .module-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .module-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .module-tab.active {
+            background: rgba(0, 204, 102, 0.2);
+            border-left: 3px solid #00CC66;
+        }
+        .module-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .module-content {
+            display: none;
+        }
+        .module-content.active {
+            display: block;
+        }
+        /* Estilos do Modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Posição fixa */
+            z-index: 1000; /* Fica no topo */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Permite rolagem se necessário */
+            background-color: rgba(0,0,0,0.8); /* Fundo preto com opacidade */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain; /* Garante que a imagem se ajuste ao modal */
+        }
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .zoomable-image {
+            cursor: zoom-in;
+            position: relative; /* Necessário para posicionar a mensagem */
+        }
+        .image-message {
+            position: absolute;
+            bottom: 8px; /* Ajuste conforme necessário para o preenchimento */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            opacity: 0; /* Escondido por padrão */
+            transition: opacity 0.3s ease;
+        }
+        .zoomable-image:hover .image-message {
+            opacity: 1; /* Mostra ao passar o mouse */
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="slide-container flex flex-col p-16 relative">
-      <div class="circuit-pattern"></div>
-      
-      <div class="tech-line" style="width: 200px; top: 15%; right: 10%; transform: rotate(-15deg);"></div>
-      <div class="tech-line" style="width: 150px; bottom: 20%; left: 5%; transform: rotate(25deg);"></div>
-      
-      <div class="z-10">
-        <h1 class="title">Soluções de Produtividade e Coleta de Dados</h1>
+        <div class="circuit-pattern"></div>
         
-        <div class="grid grid-cols-3 gap-8 mt-8">
-          <div>
-            <div class="flex flex-col space-y-2">
-              <div id="tab-coletor-plus" class="module-tab active p-4 rounded-lg flex items-center" onclick="switchTab('coletor-plus')">
-                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
-                  <i class="fas fa-plus-circle text-green-400"></i>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold">Coletor+</h4>
-                  <p class="text-sm text-gray-300">Potencializando a Performance</p>
-                </div>
-              </div>
-              
-              <div id="tab-coletor-interativo" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('coletor-interativo')">
-                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
-                  <i class="fas fa-comments text-green-400"></i>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold">Coletor Interativo</h4>
-                  <p class="text-sm text-gray-300">Inteligência na Palma do Operador</p>
-                </div>
-              </div>
-              
-              <div id="tab-ved" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('ved')">
-                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
-                  <i class="fas fa-file-pdf text-green-400"></i>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold">VED</h4>
-                  <p class="text-sm text-gray-300">Produção Sem Papel</p>
-                </div>
-              </div>
-              
-              <div id="tab-monitor-interactive-view" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('monitor-interactive-view')">
-                <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
-                  <i class="fas fa-eye text-green-400"></i>
-                </div>
-                <div>
-                  <h4 class="text-xl font-semibold">Monitor Interactive View</h4>
-                  <p class="text-sm text-gray-300">Sua Fábrica em Tempo Real</p>
-                </div>
-              </div>
-            </div>
+        <div class="tech-line" style="width: 200px; top: 15%; right: 10%; transform: rotate(-15deg);"></div>
+        <div class="tech-line" style="width: 150px; bottom: 20%; left: 5%; transform: rotate(25deg);"></div>
+        
+        <div class="z-10">
+            <h1 class="title">Soluções de Qualidade e Controle</h1>
             
-            <div class="chart-container mt-8">
-              <h4 class="text-xl mb-4 text-center">Impacto na Produtividade</h4>
-              <div style="height: 250px;">
-                <canvas id="productivityChart"></canvas>
-              </div>
+            <div class="grid grid-cols-3 gap-8 mt-8">
+                <div>
+                    <div class="flex flex-col space-y-2">
+                        <div id="tab-cep" class="module-tab p-4 rounded-lg flex items-center active" onclick="switchTab('cep')">
+                            <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                                <i class="fas fa-chart-pie text-green-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold">CEP</h4>
+                                <p class="text-sm text-gray-300">Controle Estatístico de Processo</p>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-checklist" class="module-tab p-4 rounded-lg flex items-center" onclick="switchTab('checklist')">
+                            <div class="w-10 h-10 rounded-full bg-opacity-20 bg-white flex items-center justify-center mr-4">
+                                <i class="fas fa-list-check text-green-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold">Checklist</h4>
+                                <p class="text-sm text-gray-300">Verificação e Conformidade</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container mt-8">
+                        <h4 class="text-xl mb-4 text-center">Impacto na Qualidade</h4>
+                        <div style="height: 250px;">
+                            <canvas id="qualityChart" width="330" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-span-2">
+                    <div class="module-container h-full">
+                        <div id="content-cep" class="module-content active">
+                            <h3 class="text-2xl mb-6 text-white flex items-center">
+                                <i class="fas fa-chart-pie text-green-400 mr-3"></i>
+                                CEP
+                            </h3>
+                            
+                            <p class="mb-6 text-lg">
+                                "Transforme qualidade em excelência. Com nossa solução CEP chegue mais alto."
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-magnifying-glass"></i></span>
+                                        Visualize cada passo
+                                    </h4>
+                                    <p>Tenha acesso a imagens detalhadas e instruções precisas sobre instrumentos e métodos de medição.</p>
+                                </div>
+                                
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-gears"></i></span>
+                                        Facilite o trabalho
+                                    </h4>
+                                    <p>Oriente cada etapa com recursos visuais que simplificam a execução e reduzem erros.</p>
+                                </div>
+                                
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-chart-line"></i></span>
+                                        Garanta a qualidade
+                                    </h4>
+                                    <p>Utilize cartas de controle quantitativas e qualitativas para analisar a capacidade do processo e assegurar total conformidade com as especificações.</p>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex justify-center relative">
+                                <div class="zoomable-image">
+                                    <img src="CEP.JPG" alt="CEP" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
+                                    <p class="image-message">Clique para expandir a imagem</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="content-checklist" class="module-content">
+                            <h3 class="text-2xl mb-6 text-white flex items-center">
+                                <i class="fas fa-list-check text-green-400 mr-3"></i>
+                                Checklist
+                            </h3>
+                            
+                            <p class="mb-6 text-lg">
+                                "Segurança e qualidade em primeiro lugar!"
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-lock"></i></span>
+                                        Segurança e Qualidade Inabaláveis
+                                    </h4>
+                                    <p>Coloque os pilares essenciais da operação — segurança, qualidade e produtividade — sempre no topo, sem exceções.</p>
+                                </div>
+                                
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-chart-column"></i></span>
+                                        Controle Total do Processo
+                                    </h4>
+                                    <p>Inspecione cada ponto crítico do seu processo com precisão cirúrgica — tudo fica registrado, auditável e sob controle.</p>
+                                </div>
+                                
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-bolt"></i></span>
+                                        Agilidade com Zero Erros
+                                    </h4>
+                                    <p>Conte com fluxos inteligentes que guiam o operador passo a passo, aceleram a execução e eliminam falhas e retrabalhos.</p>
+                                </div>
+                                
+                                <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
+                                    <h4 class="text-xl mb-2 font-semibold flex items-center">
+                                        <span class="text-green-400 mr-2"><i class="fas fa-screwdriver-wrench"></i></span>
+                                        Manutenção Inteligente e Proativa
+                                    </h4>
+                                    <p>Registre manutenções autônomas, gere históricos completos e receba alertas antes que falhas aconteçam — evite paradas e ganhe em confiabilidade.</p>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex justify-center relative">
+                                <div class="zoomable-image">
+                                    <img src="Checlist.JPG" alt="Checklist" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
+                                    <p class="image-message">Clique para expandir a imagem</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          
-          <div class="col-span-2">
-            <div class="module-container h-full">
-              <div id="content-coletor-plus" class="module-content active">
-                <h3 class="text-2xl mb-6 text-white flex items-center">
-                  <i class="fas fa-plus-circle text-green-400 mr-3"></i>
-                  Coletor+
-                </h3>
-                
-                <p class="mb-6 text-lg">
-                  "Potencialize a performance OPERACIONAL"
-                </p>
-                
-                <div class="grid grid-cols-2 gap-6">
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-screwdriver-wrench"></i></span>
-                      Funcionalidades moldadas
-                    </h4>
-                    <p>Desenvolvidas com base nas necessidades e sugestões dos nossos clientes, garantindo aderência total ao fluxo operacional.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-lightbulb"></i></span>
-                      Nova interface, nova experiência
-                    </h4>
-                    <p>Mais fluida, moderna e intuitiva, projetada para facilitar cada input com máxima eficiência.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-mobile-alt"></i></span>
-                      Mobilidade total
-                    </h4>
-                    <p>Acesse os módulos do CODI MES diretamente de tablets, smartphones, PC's com usabilidade otimizada em qualquer tela.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-chart-bar"></i></span>
-                      Central inteligente
-                    </h4>
-                    <p>Todas as informações e métricas essenciais reunidas em um só lugar, acelerando decisões rápidas, assertivas e autônomas.</p>
-                  </div>
-                </div>
-                <div class="mt-6 flex justify-center">
-                  <div class="image-wrapper" onclick="openImageModal(this.querySelector('img').src)">
-                    <img src="Coletor+.JPG" alt="Coletor+" class="w-full h-auto rounded-lg shadow-lg">
-                    <div class="image-trigger">Clique para expandir</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div id="content-coletor-interativo" class="module-content">
-                <h3 class="text-2xl mb-6 text-white flex items-center">
-                  <i class="fas fa-comments text-green-400 mr-3"></i>
-                  Coletor Interativo
-                </h3>
-                
-                <p class="mb-6 text-lg">
-                  "Inteligência na Palma do Operador!"
-                </p>
-                
-                <div class="grid grid-cols-2 gap-6">
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-search"></i></span>
-                      Visibilidade Imediata
-                    </h4>
-                    <p>Visibilidade Imediata das Operações Manuais!</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-comment-dots"></i></span>
-                      Comunicação direta
-                    </h4>
-                    <p>Comunicação direta, intuitiva e contínua entre sistema e operador — mais agilidade, menos erro.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-check-circle"></i></span>
-                      Garanta informações seguras
-                    </h4>
-                    <p>Garanta informações seguras e decisões embasadas, mesmo nas tarefas mais manuais.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-link"></i></span>
-                      Transforme processos manuais
-                    </h4>
-                    <p>Transforme processos manuais em fontes confiáveis de dados e performance. Unifique homem e sistema em um só fluxo produtivo — mais CONFIANÇA, mais RESULTADO.</p>
-                  </div>
-                </div>
-                <div class="mt-6 flex justify-center">
-                  <div class="image-wrapper" onclick="openImageModal(this.querySelector('img').src)">
-                    <img src="Coletor Interativo.JPG" alt="Coletor Interativo" class="w-full h-auto rounded-lg shadow-lg">
-                    <div class="image-trigger">Clique para expandir</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div id="content-ved" class="module-content">
-                <h3 class="text-2xl mb-6 text-white flex items-center">
-                  <i class="fas fa-file-pdf text-green-400 mr-3"></i>
-                  VED
-                </h3>
-                
-                <p class="mb-6 text-lg">
-                  "Produção Sem Papel: Informação Atualizada, Eficiência Máxima!"
-                </p>
-                
-                <div class="grid grid-cols-2 gap-6">
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-desktop"></i></span>
-                      Visualização Inteligente
-                    </h4>
-                    <p>Tudo na Tela, em um Toque!</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-times"></i></span>
-                      Fim da Papelada
-                    </h4>
-                    <p>Versão Certa, Sempre!</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-gears"></i></span>
-                      Processos Otimizados
-                    </h4>
-                    <p>Processos Otimizados com Informação Viva!</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-leaf"></i></span>
-                      Reduza Custos e Reforce
-                    </h4>
-                    <p>Reduza Custos e Reforce o Compromisso com o Meio Ambiente!</p>
-                  </div>
-                </div>
-                <div class="mt-6 flex justify-center">
-                  <div class="image-wrapper" onclick="openImageModal(this.querySelector('img').src)">
-                    <img src="VED.JPG" alt="VED" class="w-full h-auto rounded-lg shadow-lg">
-                    <div class="image-trigger">Clique para expandir</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div id="content-monitor-interactive-view" class="module-content">
-                <h3 class="text-2xl mb-6 text-white flex items-center">
-                  <i class="fas fa-eye text-green-400 mr-3"></i>
-                  Monitor Interactive View
-                </h3>
-                
-                <p class="mb-6 text-lg">
-                  "Sua Fábrica em Tempo Real: Visão Total, Ação Imediata!"
-                </p>
-                
-                <div class="grid grid-cols-2 gap-6">
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-eye"></i></span>
-                      Imersão Total
-                    </h4>
-                    <p>Veja Sua Fábrica Como Ela Realmente É!</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-chart-line"></i></span>
-                      Indicadores Chave
-                    </h4>
-                    <p>Acompanhe indicadores chave de performance (OEE, Produtividade, Qualidade) em tempo real.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-bell"></i></span>
-                      Alertas Inteligentes
-                    </h4>
-                    <p>Receba alertas inteligentes sobre desvios e anomalias, agindo proativamente para evitar problemas.</p>
-                  </div>
-                  
-                  <div class="module-feature bg-opacity-10 bg-white p-4 rounded-lg">
-                    <h4 class="text-xl mb-2 font-semibold flex items-center">
-                      <span class="text-green-400 mr-2"><i class="fas fa-cogs"></i></span>
-                      Controle Remoto
-                    </h4>
-                    <p>Controle remoto de máquinas e processos, otimizando a operação de qualquer lugar.</p>
-                  </div>
-                </div>
-                <div class="mt-6 flex justify-center">
-                  <div class="image-wrapper" onclick="openImageModal(this.querySelector('img').src)">
-                    <img src="Monitor Interactive Vieww 2.JPG" alt="Monitor Interactive View" class="w-full h-auto rounded-lg shadow-lg">
-                    <div class="image-trigger">Clique para expandir</div>
-                  </div>
-                </div>
-              </div>
+        </div>
+        
+        <div class="absolute bottom-8 right-8">
+            <div class="bg-white bg-opacity-10 px-4 py-2 rounded-lg">
+                <p class="text-lg font-bold">CODI</p>
             </div>
-          </div>
         </div>
-      </div>
-      
-      <div class="absolute bottom-8 right-8">
-        <div class="bg-white bg-opacity-10 px-4 py-2 rounded-lg">
-          <p class="text-lg font-bold">CODI</p>
-        </div>
-      </div>
     </div>
 
-    <div id="imageModal" class="image-modal-overlay">
-      <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
-      <div class="image-modal-content">
-        <img id="expandedImage" src="" alt="Expanded Image">
-      </div>
+    <div id="imageModal" class="modal">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="expandedImage">
     </div>
     
     <script>
-      // Tab switching functionality
-      function switchTab(moduleId) {
-        // Hide all content
-        document.querySelectorAll('.module-content').forEach(content => {
-          content.classList.remove('active');
-        });
-        
-        // Deactivate all tabs
-        document.querySelectorAll('.module-tab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        
-        // Activate selected content and tab
-        document.getElementById('content-' + moduleId).classList.add('active');
-        document.getElementById('tab-' + moduleId).classList.add('active');
-      }
-
-      // Função para abrir a modal da imagem
-      function openImageModal(src) {
-        const modal = document.getElementById('imageModal');
-        const expandedImage = document.getElementById('expandedImage');
-        expandedImage.src = src;
-        modal.style.display = 'flex'; // Exibe a modal
-      }
-
-      // Função para fechar a modal da imagem
-      function closeImageModal() {
-        const modal = document.getElementById('imageModal');
-        modal.style.display = 'none'; // Esconde a modal
-      }
-      
-      // Productivity chart
-      const ctx = document.getElementById('productivityChart').getContext('2d');
-      const productivityChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Coletor+', 'Coletor Interativo', 'VED', 'Monitor IV'],
-          datasets: [{
-            label: 'Aumento de Produtividade (%)',
-            data: [25, 20, 30, 35],
-            backgroundColor: [
-              'rgba(0, 204, 102, 0.8)',
-              'rgba(0, 204, 102, 0.6)',
-              'rgba(0, 204, 102, 0.4)',
-              'rgba(0, 204, 102, 0.2)'
-            ],
-            borderColor: [
-              'rgba(0, 204, 102, 1)',
-              'rgba(0, 204, 102, 1)',
-              'rgba(0, 204, 102, 1)',
-              'rgba(0, 204, 102, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                color: 'rgba(255, 255, 255, 0.1)'
-              },
-              ticks: {
-                color: '#F0F0F0'
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: '#F0F0F0'
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: '#F0F0F0',
-                font: {
-                  size: 10
-                }
-              }
-            }
-          }
+        // Funcionalidade de troca de abas
+        function switchTab(moduleId) {
+            // Esconde todo o conteúdo
+            document.querySelectorAll('.module-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Desativa todas as abas
+            document.querySelectorAll('.module-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Ativa o conteúdo e a aba selecionados
+            document.getElementById('content-' + moduleId).classList.add('active');
+            document.getElementById('tab-' + moduleId).classList.add('active');
         }
-      });
+        
+        // Gráfico de qualidade
+        const ctx = document.getElementById('qualityChart').getContext('2d');
+        const qualityChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Redução de Erros', 'Aumento de Conformidade', 'Melhoria Contínua', 'Otimização de Processos'],
+                datasets: [{
+                    data: [30, 35, 20, 15],
+                    backgroundColor: [
+                        'rgba(0, 204, 102, 0.8)',
+                        'rgba(0, 204, 102, 0.6)',
+                        'rgba(0, 204, 102, 0.4)',
+                        'rgba(0, 204, 102, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 204, 102, 1)',
+                        'rgba(0, 204, 102, 1)',
+                        'rgba(0, 204, 102, 1)',
+                        'rgba(0, 204, 102, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#F0F0F0', // Cor alterada para as legendas serem visíveis
+                            font: {
+                                size: 10
+                            }
+                        }
+                    },
+                    tooltip: { // Adicionado tooltip para mostrar dados ao passar o mouse
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%'; // Exibe a porcentagem
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Funcionalidade do Modal de Imagem
+        const modal = document.getElementById("imageModal");
+        const expandedImage = document.getElementById("expandedImage");
+
+        function openModal(imgElement) {
+            modal.style.display = "flex"; // Alterado para flex para centralizar
+            expandedImage.src = imgElement.src;
+            expandedImage.alt = imgElement.alt;
+            // Garante que a imagem se ajuste ao modal e seja centralizada
+            expandedImage.style.maxWidth = '90%';
+            expandedImage.style.maxHeight = '90%';
+            expandedImage.style.objectFit = 'contain';
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Fecha o modal ao clicar fora da imagem ou no botão de fechar
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal || event.target.classList.contains('close-button')) {
+                closeModal();
+            }
+        });
     </script>
-  </body>
+</body>
 </html>

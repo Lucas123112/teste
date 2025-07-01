@@ -12,13 +12,13 @@
         margin: 0;
         padding: 0;
         font-family: 'Open Sans', sans-serif;
+        overflow-y: auto; /* Adicionado para permitir scroll vertical no body */
       }
       .slide-container {
         width: 1280px;
         min-height: 720px;
         background: #20307E;
         color: #F0F0F0;
-        overflow: hidden;
         position: relative;
       }
       h1, h2, h3 {
@@ -135,9 +135,41 @@
         text-decoration: none;
         cursor: pointer;
       }
+
+      /* Estilos para o hover da imagem */
+      .image-container {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 8px; /* Para coincidir com o arredondamento da imagem */
+      }
+
+      .image-container:hover .image-overlay {
+        opacity: 1;
+      }
+
+      .image-trigger {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
     </style>
 </head>
-<body style="margin: 0px; overflow: hidden;">
+<body>
     <div class="slide-container flex flex-col p-16 relative">
       <div class="circuit-pattern"></div>
 
@@ -235,7 +267,12 @@
                   </div>
                 </div>
                 <div class="mt-6 flex justify-center">
-                  <img src="Manutenção2.JPG" alt="Manutenção" class="w-full h-auto rounded-lg shadow-lg cursor-pointer" style="max-height: 150px; object-fit: contain;" onclick="openImageModal(this.src)">
+                  <div class="image-container" onclick="openImageModal('Manutenção2.JPG')">
+                    <img src="Manutenção2.JPG" alt="Manutenção" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;">
+                    <div class="image-overlay">
+                      <span class="image-trigger">Clique para expandir</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -283,7 +320,12 @@
                   </div>
                 </div>
                 <div class="mt-6 flex justify-center">
-                  <img src="Gestão de Ferramentas.JPG" alt="Gestão de Ferramentas" class="w-full h-auto rounded-lg shadow-lg cursor-pointer" style="max-height: 150px; object-fit: contain;" onclick="openImageModal(this.src)">
+                  <div class="image-container" onclick="openImageModal('Gestão de Ferramentas.JPG')">
+                    <img src="Gestão de Ferramentas.JPG" alt="Gestão de Ferramentas" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;">
+                    <div class="image-overlay">
+                      <span class="image-trigger">Clique para expandir</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -331,7 +373,12 @@
                   </div>
                 </div>
                 <div class="mt-6 flex justify-center">
-                  <img src="Cronoanalise.JPG" alt="Cronoanálise" class="w-full h-auto rounded-lg shadow-lg cursor-pointer" style="max-height: 150px; object-fit: contain;" onclick="openImageModal(this.src)">
+                  <div class="image-container" onclick="openImageModal('Cronoanalise.JPG')">
+                    <img src="Cronoanalise.JPG" alt="Cronoanálise" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;">
+                    <div class="image-overlay">
+                      <span class="image-trigger">Clique para expandir</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -13,15 +13,14 @@
             margin: 0;
             padding: 0;
             font-family: 'Open Sans', sans-serif;
-            overflow: hidden; /* Prevent body scroll when modal is open */
         }
         .slide-container {
             width: 1280px;
-            min-height: 720px;
+            min-height: 100vh;
             background: #20307E;
             color: #F0F0F0;
-            overflow-y: auto; /* Added for vertical scroll */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-y: auto;
+            overflow-x: hidden;
             position: relative;
         }
         h1, h2, h3 {
@@ -96,17 +95,17 @@
         .module-content.active {
             display: block;
         }
-        /* Modal Styles */
+        /* Estilos do Modal */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
+            display: none;
+            position: fixed;
+            z-index: 1000;
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
             justify-content: center;
             align-items: center;
         }
@@ -115,7 +114,7 @@
             display: block;
             max-width: 90%;
             max-height: 90%;
-            object-fit: contain; /* Ensure the image fits within the modal */
+            object-fit: contain;
         }
         .close-button {
             position: absolute;
@@ -135,11 +134,26 @@
         }
         .zoomable-image {
             cursor: zoom-in;
-            position: relative; /* Needed for positioning the message */
+            position: relative;
+            /* Ajuste para permitir que a imagem ocupe mais espaço */
+            width: 100%; 
+            height: auto; /* Permite que a altura se ajuste automaticamente */
+            display: flex; /* Adicionado para centralizar a imagem dentro do seu container */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            padding: 0; /* Removido padding extra se houver */
+        }
+
+        .zoomable-image img {
+            width: 100%; /* Permite que a imagem preencha a largura total do seu contêiner */
+            height: auto; /* Mantém a proporção da imagem */
+            max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
+            max-height: 350px; /* **Aumente este valor** para que a imagem seja maior. Ajuste conforme necessário. */
+            object-fit: contain; /* Garante que a imagem se ajuste ao espaço sem cortar */
         }
         .image-message {
             position: absolute;
-            bottom: 8px; /* Adjust as needed for padding */
+            bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
             background-color: rgba(0, 0, 0, 0.7);
@@ -147,11 +161,11 @@
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 0.8em;
-            opacity: 0; /* Hidden by default */
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
         .zoomable-image:hover .image-message {
-            opacity: 1; /* Show on hover */
+            opacity: 1;
         }
     </style>
 </head>
@@ -236,7 +250,7 @@
                             </div>
                             <div class="mt-6 flex justify-center relative">
                                 <div class="zoomable-image">
-                                    <img src="CEP.JPG" alt="CEP" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
+                                    <img src="CEP.JPG" alt="CEP" class="w-full h-auto rounded-lg shadow-lg" onclick="openModal(this)">
                                     <p class="image-message">Clique para expandir a imagem</p>
                                 </div>
                             </div>
@@ -287,7 +301,7 @@
                             </div>
                             <div class="mt-6 flex justify-center relative">
                                 <div class="zoomable-image">
-                                    <img src="Checlist.JPG" alt="Checklist" class="w-full h-auto rounded-lg shadow-lg" style="max-height: 150px; object-fit: contain;" onclick="openModal(this)">
+                                    <img src="Checlist.JPG" alt="Checklist" class="w-full h-auto rounded-lg shadow-lg" onclick="openModal(this)">
                                     <p class="image-message">Clique para expandir a imagem</p>
                                 </div>
                             </div>
@@ -310,24 +324,24 @@
     </div>
     
     <script>
-        // Tab switching functionality
+        // Funcionalidade de troca de abas
         function switchTab(moduleId) {
-            // Hide all content
+            // Esconde todo o conteúdo
             document.querySelectorAll('.module-content').forEach(content => {
                 content.classList.remove('active');
             });
             
-            // Deactivate all tabs
+            // Desativa todas as abas
             document.querySelectorAll('.module-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Activate selected content and tab
+            // Ativa o conteúdo e a aba selecionados
             document.getElementById('content-' + moduleId).classList.add('active');
             document.getElementById('tab-' + moduleId).classList.add('active');
         }
         
-        // Quality chart
+        // Gráfico de qualidade
         const ctx = document.getElementById('qualityChart').getContext('2d');
         const qualityChart = new Chart(ctx, {
             type: 'doughnut',
@@ -357,13 +371,13 @@
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#F0F0F0', // Changed legend label color to be visible
+                            color: '#F0F0F0',
                             font: {
                                 size: 10
                             }
                         }
                     },
-                    tooltip: { // Added tooltip to show data on hover
+                    tooltip: {
                         callbacks: {
                             label: function(context) {
                                 let label = context.label || '';
@@ -371,7 +385,7 @@
                                     label += ': ';
                                 }
                                 if (context.parsed !== null) {
-                                    label += context.parsed + '%'; // Display percentage
+                                    label += context.parsed + '%';
                                 }
                                 return label;
                             }
@@ -381,15 +395,14 @@
             }
         });
 
-        // Image Modal Functionality
+        // Funcionalidade do Modal de Imagem
         const modal = document.getElementById("imageModal");
         const expandedImage = document.getElementById("expandedImage");
 
         function openModal(imgElement) {
-            modal.style.display = "flex"; // Changed to flex for centering
+            modal.style.display = "flex";
             expandedImage.src = imgElement.src;
             expandedImage.alt = imgElement.alt;
-             // Ensure the image fits within the modal and is centered
             expandedImage.style.maxWidth = '90%';
             expandedImage.style.maxHeight = '90%';
             expandedImage.style.objectFit = 'contain';
@@ -399,7 +412,7 @@
             modal.style.display = "none";
         }
 
-        // Close modal when clicking outside the image or on the close button
+        // Fecha o modal ao clicar fora da imagem ou no botão de fechar
         modal.addEventListener('click', function(event) {
             if (event.target === modal || event.target.classList.contains('close-button')) {
                 closeModal();
